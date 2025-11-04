@@ -4,7 +4,7 @@
 
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-02848a76f76cb5410"
-INSTANCES=("mongodb" "redis" "mysql")
+INSTANCES=("mongodb")
 zone_ID="Z08366282S5RRXUDFM0PY"
 DOMAIN_NAME="kimidi.site"
 
