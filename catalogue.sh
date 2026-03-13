@@ -85,4 +85,4 @@ VALIDATE $? "Installing MongoDB Client"
     VALIDATE $? "Loading data into MongoDB"
 #else
 #    echo -e "Data is already loaded ... $Y SKIPPING $N"
-fi
+#fi
