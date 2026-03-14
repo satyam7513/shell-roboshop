@@ -63,13 +63,13 @@ unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzipping shipping"
 
 mvn clean package &>>$LOG_FILE
-VALIDATE $? "packagin the shipping application"
+VALIDATE $? "packaging the shipping application"
 
-mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
-VALIDATE $? "renaming the jar file"
+mv target/shipping-1.0.jar shipping.jar  &>>$LOG_FILE
+VALIDATE $? "Moving and renaming Jar file"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
-VALIDATE "Copying shipping.service"
+
 
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Daemon reloading"
