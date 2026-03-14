@@ -51,7 +51,6 @@ mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD &>>LOG_FILE
 VALIDATE $? "Setting mysql root password"
 
 END_TIME=$(date +%s)
-
-TOTAL_TIME =$(( $END_TIME - $START_TIME ))
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
 
 echo -e "Script execution completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
