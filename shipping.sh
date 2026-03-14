@@ -38,13 +38,13 @@ VALIDATE(){
 }
 
 
-dnf install maven -y
+dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "maven Installing & Java"
 
-id roboshop
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]
 then
-   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
    VALIDATE $? "Roboshop user adding"
 
 else
@@ -54,47 +54,47 @@ fi
 mkdir -p /app
 VALIDATE $? "creating app directory"
 
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloding shipping"
 
 rm -rf /app/*
 cd /app 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzipping shipping"
 
-mvn clean package 
+mvn clean package &>>$LOG_FILE
 VALIDATE $? "packagin the shipping application"
 
-mv target/shipping-1.0.jar shipping.jar 
-VALIDATE $? "moving and renaming the jar file"
+mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
+VALIDATE $? "renaming the jar file"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 VALIDATE "Copying shipping.service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Daemon reloading"
 
-systemctl enable shipping 
+systemctl enable shipping &>>$LOG_FILE
 VALIDATE $? "Enabling shipping"
 
-systemctl start shipping
+systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "Starting shipping"
 
-dnf install mysql -y
+dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing MYSQL"
 
-mysql -h mysql.kimidi.site -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities'
+mysql -h mysql.kimidi.site -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
 if [ $? -ne 0 ]
 then
-    mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
-    mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql  &>>$LOG_FILE
-    mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
+    mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE &>>$LOG_FILE
+    mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql  &>>$LOG_FILE &>>$LOG_FILE
+    mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE &>>$LOG_FILE
     VALIDATE $? "Loading data into MySQL"
 else
     echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
 fi
 
-systemctl restart shipping
+systemctl restart shipping &>>$LOG_FILE
 VALIDATE $? "Restart shipping"
 
 END_TIME=$(date +%s)
