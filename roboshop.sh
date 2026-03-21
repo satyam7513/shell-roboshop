@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ami-id="ami-0220d79f3f480ecf5"
+ami_id="ami-0220d79f3f480ecf5"
 sg_id="sg-0d33396b3a43651ba"
 INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "frontend")
 ZONE_ID="Z05669211QZY6H9HOXJ4R"
@@ -29,7 +29,7 @@ do
         ,"Changes": [{
         "Action"              : "UPSERT"
         ,"ResourceRecordSet"  : {
-            "Name"              : "'$instance'.'$DOMAIN_NAME'"
+            "Name"              : "'$RECORD_NAME'"
             ,"Type"             : "A"
             ,"TTL"              : 1
             ,"ResourceRecords"  : [{
