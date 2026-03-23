@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ami_id="ami-0220d79f3f480ecf5"
+ami-id="ami-0220d79f3f480ecf5"
 sg_id="sg-0d33396b3a43651ba"
 INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "frontend")
 ZONE_ID="Z05669211QZY6H9HOXJ4R"
